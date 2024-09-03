@@ -13,10 +13,12 @@ function addBookToLibrary(title, author, pages, read){
     myLibrary.push(newBook);
 }   
 
-addBookToLibrary("Hi", "Bye", 3, true);
-addBookToLibrary("2", "1", 1000, false);
-addBookToLibrary("32", "12", 2323, true);
+addBookToLibrary("Moby-Dick", "Herman Melville", 378, false);
+addBookToLibrary("The Wings", "Yi Sang", 34, false);
+addBookToLibrary("Demian", "Hermann Hesse", 390, false);
 
+
+/* Display function */
 const table = document.querySelector("tbody");
 
 function display(){
@@ -44,13 +46,42 @@ function display(){
         const col4 = document.createElement("td");
         col4.textContent = book.read;
         row.appendChild(col4)
+
+        const col5 = document.createElement("td");
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Remove";
+        deleteBtn.style["display"] = "block";
+        deleteBtn.style["margin"] = "auto";
+        deleteBtn.addEventListener("click", ()=> {
+            myLibrary.splice(book.index, 1);
+            display();
+        });
+        col5.appendChild(deleteBtn);
+        row.appendChild(col5);
+
+        const col6 = document.createElement("td");
+        const updateBtn = document.createElement("button");
+        updateBtn.textContent = "Update";
+        updateBtn.style["display"] = "block";
+        updateBtn.style["margin"] = "auto";
+        updateBtn.addEventListener("click", ()=> {
+            book.read = !(book.read);
+            display();
+        });
+        col6.appendChild(updateBtn);
+        row.appendChild(col6);
+
         table.append(row);
+
+        
         index++;
     });
 }
 
 display();
+/*  */
 
+/* For dialog container */
 const dialog = document.querySelector("dialog");
 const showButton = document.querySelector("#showButton");
 const closeButton = document.querySelector("#closeButton");
@@ -62,7 +93,9 @@ showButton.addEventListener("click", () => {
 closeButton.addEventListener("click", () => {
     dialog.close();
 });
+/*  */
 
+/* Creating and adding new books */
 const form = document.querySelector("form")
 const submitButton = document.querySelector("#submitButton");
 const author = document.querySelector("#author");
@@ -83,3 +116,4 @@ submitButton.addEventListener("click", (event) =>{
         pages.reportValidity();
     }
 });
+/*  */
