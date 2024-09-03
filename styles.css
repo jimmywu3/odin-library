@@ -10,3 +10,22 @@ th, td{
     padding: 0px 8px;
 }
 
+#showButton{
+    display: block;
+    margin: 8px auto;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+.check{
+    display: flex;
+    align-items: center;
+}
+
+#closeButton{
+    margin-top: 4px;
+    width: 100%;    
+}

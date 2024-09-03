@@ -11,17 +11,23 @@ function Book(title, author, pages, read){
 function addBookToLibrary(title, author, pages, read){
     const newBook = new Book(title, author, pages, read);
     myLibrary.push(newBook);
-    newBook.index = myLibrary.length - 1;
 }   
 
 addBookToLibrary("Hi", "Bye", 3, true);
 addBookToLibrary("2", "1", 1000, false);
 addBookToLibrary("32", "12", 2323, true);
 
-const table = document.querySelector("table");
+const table = document.querySelector("tbody");
 
 function display(){
+    let child = table.lastElementChild;
+    while(child){
+        table.removeChild(child);
+        child = table.lastElementChild;
+    }
+    let index = 0;
     myLibrary.forEach((book) => {
+        book.index = index;
         const row = document.createElement("tr");
         const col0 = document.createElement("th");
         col0.textContent = book.index + 1;
@@ -39,7 +45,41 @@ function display(){
         col4.textContent = book.read;
         row.appendChild(col4)
         table.append(row);
+        index++;
     });
 }
 
 display();
+
+const dialog = document.querySelector("dialog");
+const showButton = document.querySelector("#showButton");
+const closeButton = document.querySelector("#closeButton");
+
+showButton.addEventListener("click", () => {
+    dialog.showModal();
+});
+
+closeButton.addEventListener("click", () => {
+    dialog.close();
+});
+
+const form = document.querySelector("form")
+const submitButton = document.querySelector("#submitButton");
+const author = document.querySelector("#author");
+const title = document.querySelector("#title");
+const pages = document.querySelector("#pages");
+const read = document.querySelector("#read");
+
+submitButton.addEventListener("click", (event) =>{
+    if(author.checkValidity() && title.checkValidity() && pages.checkValidity()){
+        event.preventDefault();
+        addBookToLibrary(author.value, title.value, pages.value, read.checked);
+        display();
+        dialog.close();
+        form.reset();
+    } else {
+        author.reportValidity();
+        title.reportValidity();
+        pages.reportValidity();
+    }
+});
