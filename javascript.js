@@ -1,21 +1,36 @@
-const myLibrary = [];
+class Book{
+    constructor(title, author, pages, read){
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
 
-function Book(title, author, pages, read){
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
+    get showBook(){
+        return this.title + " " + this.author + " " + this.pages + " " + this.read;
+    }
 }
 
+class Library{
+    constructor(){
+        this.library = [];
+    }
 
-function addBookToLibrary(title, author, pages, read){
-    const newBook = new Book(title, author, pages, read);
-    myLibrary.push(newBook);
-}   
+    get showAll(){
+        return this.library
+    }
 
-addBookToLibrary("Moby-Dick", "Herman Melville", 378, false);
-addBookToLibrary("The Wings", "Yi Sang", 34, false);
-addBookToLibrary("Demian", "Hermann Hesse", 390, false);
+    addBookToLibrary(title, author, pages, read){
+        const newBook = new Book(title, author, pages, read);
+        this.library.push(newBook);
+    }
+}
+
+const newLibrary = new Library();
+
+newLibrary.addBookToLibrary("Moby-Dick", "Herman Melville", 378, false);
+newLibrary.addBookToLibrary("The Wings", "Yi Sang", 34, false);
+newLibrary.addBookToLibrary("Demian", "Hermann Hesse", 390, false);
 
 
 /* Display function */
@@ -28,7 +43,7 @@ function display(){
         child = table.lastElementChild;
     }
     let index = 0;
-    myLibrary.forEach((book) => {
+    newLibrary.showAll.forEach((book) => {
         book.index = index;
         const row = document.createElement("tr");
         const col0 = document.createElement("th");
@@ -53,7 +68,7 @@ function display(){
         deleteBtn.style["display"] = "block";
         deleteBtn.style["margin"] = "auto";
         deleteBtn.addEventListener("click", ()=> {
-            myLibrary.splice(book.index, 1);
+            newLibrary.showAll.splice(book.index, 1);
             display();
         });
         col5.appendChild(deleteBtn);
@@ -106,7 +121,7 @@ const read = document.querySelector("#read");
 submitButton.addEventListener("click", (event) =>{
     if(author.checkValidity() && title.checkValidity() && pages.checkValidity()){
         event.preventDefault();
-        addBookToLibrary(author.value, title.value, pages.value, read.checked);
+        newLibrary.addBookToLibrary(author.value, title.value, pages.value, read.checked);
         display();
         dialog.close();
         form.reset();
