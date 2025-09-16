@@ -104,6 +104,7 @@ const pages = document.querySelector("#pages");
 const read = document.querySelector("#read");
 
 submitButton.addEventListener("click", (event) =>{
+    event.preventDefault();
     if(author.checkValidity() && title.checkValidity() && pages.checkValidity()){
         event.preventDefault();
         addBookToLibrary(author.value, title.value, pages.value, read.checked);
@@ -117,3 +118,35 @@ submitButton.addEventListener("click", (event) =>{
     }
 });
 /*  */
+
+/* Input Validation */
+
+
+submitButton.addEventListener("click", (event) => {
+    if(author.validity.valueMissing){
+        author.setCustomValidity("The author name must be filled!");
+    }else{
+        author.setCustomValidity("");
+    }
+
+    if(title.validity.valueMissing){
+        title.setCustomValidity("The title name must be filled!");
+    }else{
+        title.setCustomValidity("");
+    }
+
+    if(pages.validity.valueMissing){
+        pages.setCustomValidity("The number of pages must be filled!");
+    }else if(pages.validity.typeMismatch){
+        pages.setCustomValidity("The input should be a number!!!");
+    }else{
+        pages.setCustomValidity("");
+    }
+
+
+});
+
+
+
+
+// 
